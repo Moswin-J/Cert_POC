@@ -14,15 +14,20 @@
 
     <script>
       async function fetchSecret() {
-        const res = await fetch('https://pz4w2yj4bl.execute-api.eu-west-1.amazonaws.com/default/demo-fetch-secret');
-        const data = await res.json();
+        try {
+          const res = await fetch('https://pz4w2yj4bl.execute-api.eu-west-1.amazonaws.com/default/demo-fetch-secret');
+          const raw = await res.json();
+          const data = JSON.parse(raw.body); // <--- FIX: parse nested JSON string
 
-        document.getElementById('result').innerHTML = `
-          <h3>Secret Fetched:</h3>
-          <pre>Private Key Start: ${data.private_key_start}</pre>
-          <pre>Public Cert Start: ${data.public_cert_start}</pre>
-          <pre>CA Chain Start: ${data.ca_chain_start}</pre>
-        `;
+          document.getElementById('result').innerHTML = `
+            <h3>Secret Fetched:</h3>
+            <pre>Private Key Start: ${data.private_key_start}</pre>
+            <pre>Public Cert Start: ${data.public_cert_start}</pre>
+            <pre>CA Chain Start: ${data.ca_chain_start}</pre>
+          `;
+        } catch (err) {
+          document.getElementById('result').innerText = "❌ Error fetching secret: " + err.message;
+        }
       }
     </script>
   </body>
