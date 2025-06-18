@@ -2,8 +2,28 @@
 <html>
   <head>
     <title>AWS Amplify Demo</title>
+    <style>
+      body { font-family: Arial; margin: 20px; }
+      pre { background: #f5f5f5; padding: 10px; border: 1px solid #ccc; }
+    </style>
   </head>
   <body>
     <h1>Hello from Amplify</h1>
+    <button onclick="fetchSecret()">Fetch Cert Secret</button>
+    <div id="result"></div>
+
+    <script>
+      async function fetchSecret() {
+        const res = await fetch('https://pz4w2yj4bl.execute-api.eu-west-1.amazonaws.com/default/demo-fetch-secret');
+        const data = await res.json();
+
+        document.getElementById('result').innerHTML = `
+          <h3>Secret Fetched:</h3>
+          <pre>Private Key Start: ${data.private_key_start}</pre>
+          <pre>Public Cert Start: ${data.public_cert_start}</pre>
+          <pre>CA Chain Start: ${data.ca_chain_start}</pre>
+        `;
+      }
+    </script>
   </body>
 </html>
