@@ -3,8 +3,9 @@
   <head>
     <title>AWS Amplify Demo</title>
     <style>
-      body { font-family: Arial; margin: 20px; }
-      pre { background: #f5f5f5; padding: 10px; border: 1px solid #ccc; }
+      body { font-family: Arial, sans-serif; margin: 20px; }
+      button { padding: 10px 20px; font-size: 16px; }
+      pre { background: #f5f5f5; padding: 10px; border: 1px solid #ccc; white-space: pre-wrap; }
     </style>
   </head>
   <body>
@@ -16,8 +17,7 @@
       async function fetchSecret() {
         try {
           const res = await fetch('https://pz4w2yj4bl.execute-api.eu-west-1.amazonaws.com/default/demo-fetch-secret');
-          const raw = await res.json();
-          const data = JSON.parse(raw.body); // <--- FIX: parse nested JSON string
+          const data = await res.json(); // Already parsed, no need for JSON.parse again
 
           document.getElementById('result').innerHTML = `
             <h3>Secret Fetched:</h3>
